@@ -861,18 +861,6 @@
 		"feed_url": "Url information about local sender"
             }
         },
-	"PostgreSQL Tor Network": {
-            "module": "intelmq.bots.outputs.postgresql.postgresqltornetwork",
-            "description": "PostgreSQL Tor Network is the bot responsible to send Tor Network information to a PostgreSQL Database.",
-            "parameters": {
-                "processing_interval": "0",
-                "host": "<ip>",
-                "port": "<port>",
-                "database": "<database>",
-                "user": "<username>",
-                "password": "<password>"
-            }
-        },
 	"HoneyMap": {
             "module": "intelmq.bots.outputs.IntelMQAgent.honeymap",
             "description": "HoneyMap is the bot responsible to send events to Honeymap.",
