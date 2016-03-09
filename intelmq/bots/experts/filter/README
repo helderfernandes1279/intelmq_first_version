@@ -1,0 +1,19 @@
+This bot was developed to filter events with a JSON rule file
+
+
+The file must have a JSON array structure, the array contains a set of rules to match against the events.
+
+
+Example:
+
+
+[ 
+  {
+    "feed" : "openbl",
+    "source_cymru_cc" : "PT"
+  }, 
+    {
+    "feed" : "openbl",
+    "source_cymru_cc" : "BR"
+  }
+]
