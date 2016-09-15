@@ -32,6 +32,7 @@ class FilterExpertBot(Bot):
 	     
 	      if rulematch==True:
 		  self.send_message(event)
+                  self.logger.info("Match")
 		  break; 	
 		                      
         self.acknowledge_message()

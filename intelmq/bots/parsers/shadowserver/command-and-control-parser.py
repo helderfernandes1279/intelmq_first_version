@@ -4,7 +4,7 @@ from intelmq.lib.bot import Bot, sys
 from intelmq.lib.message import Event
 from intelmq.bots import utils
 
-class ShadowServerSandboxUrlParserBot(Bot):
+class ShadowServerCommandandControlParserBot(Bot):
 
     def process(self):
         report = self.receive_message()
@@ -63,5 +63,5 @@ class ShadowServerSandboxUrlParserBot(Bot):
    
 
 if __name__ == "__main__":
-    bot = ShadowServerSandboxUrlParserBot(sys.argv[1])
+    bot = ShadowServerCommandandControlParserBot(sys.argv[1])
     bot.start()

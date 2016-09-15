@@ -18,8 +18,8 @@ class MailAttachCollectorBot(Bot):
 		   continue
 		self.logger.info(subject)
                 self.logger.info("Reading email report")
-                
-                for attach in message.attachments:
+                if hasattr(message,'attachments'):
+		 for attach in message.attachments:
                     if not attach:
                         continue
                     

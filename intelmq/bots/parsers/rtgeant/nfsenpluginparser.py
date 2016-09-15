@@ -64,7 +64,7 @@ class nfsenpluginParserBot(Bot):
                      event.add('feed', 'RT-FCCN_Nfsen')
                      event.add('feed_code', 'FCCN_Nfsen')
 		     event.add('type', 'botnet drone')
-		     event.add("additional_information","C&C connection attempt occurred")
+		     event.add("additional_information","Possible C&C connection attempt occurred")
                      event = utils.generate_observation_time(event, "observation_time")
                      event = utils.generate_reported_fields(event)
                      self.send_message(event)

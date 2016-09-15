@@ -1,11 +1,16 @@
 import re
 import sys
 
-FILE = "/usr/share/doc/intelmq/DataHarmonization.md"
+FILE = "/opt/intelmq/docs/DataHarmonization.md"
 OUTPUTFILE = "/tmp/initdb.sql"
-REGEX_TABLE = "^\|[^|]+\|[^|]+\|[^|]+\|[^|]+\|$"
-REGEX_FIELDS = "\|[^|]+\|([^|]+)\|([^|]+)\|"
+REGEX_TABLE = "^\|[^|]+\|[^|]+\|[^|]+\|[^|]+\|[^|]+\|$"
+REGEX_FIELDS = "\|[^|]+\|([^|]+)\|([^|]+)\|([^|]+)\|"
 FIELDS = dict()
+
+
+"^\|[^|]+\|[^|]+\|[^|]+\|[^|]+\|$"
+
+
 
 try:
     with open(FILE, 'r') as fp:
@@ -19,7 +24,7 @@ except IOError:
 for line in data.split('\n'):
     match = re.search(REGEX_TABLE, line)
     if match:
-
+        
         if match.group(0).startswith('|Section') or match.group(0).startswith('|:---'):
             continue
 

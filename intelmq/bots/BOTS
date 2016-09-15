@@ -6,7 +6,7 @@
             "parameters": {
                 "rate_limit": "3600",
                 "host": "0.0.0.0",
-				"port": "8000"
+		"port": "8000"
             }
 	},
 	"Tor Network": {
@@ -14,7 +14,7 @@
             "description": "Tor Network Collector is the bot responsible to get Tor Network list from source of information.",
             "parameters": {
                 "url": "http://torstatus.blutmagie.de/query_export.php/Tor_query_EXPORT.csv",
-                "processing_interval": "86400"
+                "rate_limit": "86400"
             }
         },	
 	"ACDC": {
@@ -49,6 +49,14 @@
             "parameters": {
                 "url": "https://feodotracker.abuse.ch/blocklist/?download=ipblocklist",
                 "rate_limit": "86400"
+            }
+        },
+	"RansomWare Tracker": {
+            "module": "intelmq.bots.collectors.url.collector",
+            "description": "RansomWare Tracker Collector is the bot responsible to get Ransomware events from source of information.",
+            "parameters": {
+                "url": "https://ransomwaretracker.abuse.ch/feeds/PT/",
+                "rate_limit": "3600"
             }
         },
 	"RequestTracker": {
@@ -344,6 +352,21 @@
                 "attach_unzip": true
             }
         },
+       "ShadowServer IPv6 Http Sinkhole Report": {
+            "module": "intelmq.bots.collectors.mail.mail-attach",
+            "description": "ShadowServer Microsoft Sinkhole Collector is the bot responsible to get the report from source of information.",
+            "parameters": {
+                "rate_limit": "3600",
+                "mail_host": "<host>",
+                "mail_user": "<user>",
+                "mail_password": "<password>",
+                "mail_ssl": true,
+                "folder": "Inbox.shadowserver",
+		"subject_regex": "Shadowserver Portugal Microsoft Sinkhole Report",
+                "attach_regex": "microsoft_sinkhole-portugal-geo.csv$",
+                "attach_unzip": true
+            }
+        },
        "ShadowServer Netbios Report": {
             "module": "intelmq.bots.collectors.mail.mail-attach",
             "description": "ShadowServer Netbios Collector is the bot responsible to get the report from source of information.",
@@ -370,6 +393,21 @@
                 "mail_ssl": true,
                 "folder": "Inbox.shadowserver",
 		"subject_regex": "Open Portmapper Scan Report",
+                "attach_regex": "asn.csv.zip",
+                "attach_unzip": true
+            }
+        },
+	"ShadowServer Open MongoDB Report": {
+            "module": "intelmq.bots.collectors.mail.mail-attach",
+            "description": "ShadowServer PortMapper Collector is the bot responsible to get the report from source of information.",
+            "parameters": {
+                "rate_limit": "3600",
+                "mail_host": "<host>",
+                "mail_user": "<user>",
+                "mail_password": "<password>",
+                "mail_ssl": true,
+                "folder": "Inbox.shadowserver",
+		"subject_regex": "Open MongoDB Service Report",
                 "attach_regex": "asn.csv.zip",
                 "attach_unzip": true
             }
@@ -411,7 +449,7 @@
             "module": "intelmq.bots.parsers.tor.parser",
             "description": "This bot is responsible to parse Tor Network report.",
             "parameters": {
-                "processing_interval": "0"
+                "rate_limit": "0"
             }
         },
 	"ACDC FAST FLUX": {
@@ -459,6 +497,13 @@
 	"Feodo Botnet Ip Blocklist Parser": {
             "module": "intelmq.bots.parsers.botnetserverblocklist.feodo",
             "description": "This bot is responsible to parse C&C Servers Ip Blocklist.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+        },
+	"RansomWare Parser": {
+            "module": "intelmq.bots.parsers.ransomwaretracker.parser",
+            "description": "This bot is responsible to parse RansomWare events from abuse.ch.",
             "parameters": {
                 "rate_limit": "0"
             }
@@ -513,6 +558,13 @@
                 "rate_limit": "0"
             }
         },
+        "RT ARBOR PEAKFLOW": {
+            "module": "intelmq.bots.parsers.rtarbor.arbordosparser",
+            "description": "RT ARBOR PEAKFLOW Parser is the bot responsible to parse the arbor peakflow dos alerts from request tracker.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+        },
 	"RT IPECHELON COPYRIGHT": {
             "module": "intelmq.bots.parsers.rtcopyrights.ipechelonparser",
             "description": "RT IPECHELON COPYRIGHT Parser is the bot responsible to parse the IP echelon copyrights reports from request tracker.",
@@ -522,11 +574,19 @@
         },
 	"RT StarZ COPYRIGHT": {
             "module": "intelmq.bots.parsers.rtcopyrights.starzparser",
-            "description": "RT StarZ COPYRIGHT Parser is the bot responsible to parse the IP StarZ copyrights reports from request tracker.",
+            "description": "RT StarZ COPYRIGHT Parser is the bot responsible to parse the StarZ copyrights reports from request tracker.",
             "parameters": {
                 "rate_limit": "0"
             }
         },
+        "RT CuttingCorp COPYRIGHT": {
+            "module": "intelmq.bots.parsers.rtcopyrights.cuttingcorp",
+            "description": "RT Cutting Corp COPYRIGHT Parser is the bot responsible to parse the Cutting Corp copyrights reports from request tracker.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+        },
+
         "RT Zenimax COPYRIGHT": {
             "module": "intelmq.bots.parsers.rtcopyrights.zenimaxparser",
             "description": "RT Zenimax COPYRIGHT Parser is the bot responsible to parse the Zenimax copyrights reports from request tracker.",
@@ -534,6 +594,14 @@
                 "rate_limit": "0"
             }
         },
+        "RT Turnet Network Television COPYRIGHT": {
+            "module": "intelmq.bots.parsers.rtcopyrights.turnernetwork",
+            "description": "RT Turner Network Television COPYRIGHT Parser is the bot responsible to parse the copyrights reports from request tracker.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+        },
+
         "RT Entura COPYRIGHT": {
             "module": "intelmq.bots.parsers.rtcopyrights.enturaparser",
             "description": "RT Entura COPYRIGHT Parser is the bot responsible to parse the Entura copyrights reports from request tracker.",
@@ -688,6 +756,13 @@
                 "rate_limit": "0"
             }
 	},
+	"ShadowServer IPv6-http-Sinkhole": {
+            "module": "intelmq.bots.parsers.shadowserver.ipv6-http-sinkhole",
+            "description": "ShadowServer Http Sinkhole Parser is the bot responsible to parse the report and sanitize the information.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+	},
         "ShadowServer SSDP": {
             "module": "intelmq.bots.parsers.shadowserver.ssdp-parser",
             "description": "ShadowServer SSDP Parser is the bot responsible to parse the report and sanitize the information.",
@@ -705,6 +780,13 @@
 	"ShadowServer PortMapper": {
             "module": "intelmq.bots.parsers.shadowserver.portmapper-parser",
             "description": "ShadowServer PortMapper Parser is the bot responsible to parse the report and sanitize the information.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+	},
+	"ShadowServer Open MongoDB": {
+            "module": "intelmq.bots.parsers.shadowserver.mongodb-parser",
+            "description": "ShadowServer MongoDB Parser is the bot responsible to parse the report and sanitize the information.",
             "parameters": {
                 "rate_limit": "0"
             }
@@ -731,9 +813,21 @@
         },
 	"Tor exit Node Identifier": {
             "module": "intelmq.bots.experts.tor.torexitnode",
-            "description": "PostgreSQLBotnetServerIP is the bot responsible to send C&C IP blocklist to a PostgreSQL Database.",
+            "description": "Tor exit Node Identifier is the bot responsible to detect TOR IP's.",
             "parameters": {
-                "processing_interval": "0",
+                "rate_limit": "0",
+                "host": "<ip>",
+                "port": "<port>",
+                "database": "<database>",
+                "user": "<username>",
+                "password": "<password>"
+            }
+        },
+	"RCTS Host Info": {
+            "module": "intelmq.bots.experts.hostinfo.hostinfo",
+            "description": "RCTS Host Info is the bot responsible to write customized information in the event, if match with src IP or dst IP.",
+            "parameters": {
+                "rate_limit": "0",
                 "host": "<ip>",
                 "port": "<port>",
                 "database": "<database>",
@@ -758,6 +852,14 @@
             "parameters": {
                 "rate_limit": "0",
                 "rulesfile": "full path to Json file with rules"
+            }
+        },
+	"Exclusions Bot": {
+            "module": "intelmq.bots.experts.exclusions.exclusions",
+            "description": "Exclusions Bot is the bot responsible to insert tags specifying if the events is excluded or not",
+            "parameters": {
+                "rate_limit": "0",
+                "exclusionsfile": "full path to Json file with exclusion rules"
             }
         },
         "Abusix": {
@@ -850,6 +952,18 @@
                 "rate_limit": "0"
             }
         },
+	"PostgreSQL Tor Network": {
+            "module": "intelmq.bots.outputs.postgresql.postgresqltornetwork",
+            "description": "PostgreSQL Tor Network is the bot responsible to send Tor Network information to a PostgreSQL Database.",
+            "parameters": {
+                "rate_limit": "0",
+                "host": "<ip>",
+                "port": "<port>",
+                "database": "<database>",
+                "user": "<username>",
+                "password": "<password>"
+            }
+        },
 	"IntelMQAgent": {
             "module": "intelmq.bots.outputs.IntelMQAgent.intelmqagent",
             "description": "IntelMQAgent is the bot responsible to send events to IntelMQ collectors.",
@@ -859,18 +973,6 @@
                 "port": "<port>",
 		"feed": "Information about local sender",
 		"feed_url": "Url information about local sender"
-            }
-        },
-	"PostgreSQL Tor Network": {
-            "module": "intelmq.bots.outputs.postgresql.postgresqltornetwork",
-            "description": "PostgreSQL Tor Network is the bot responsible to send Tor Network information to a PostgreSQL Database.",
-            "parameters": {
-                "processing_interval": "0",
-                "host": "<ip>",
-                "port": "<port>",
-                "database": "<database>",
-                "user": "<username>",
-                "password": "<password>"
             }
         },
 	"HoneyMap": {

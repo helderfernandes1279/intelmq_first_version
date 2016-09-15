@@ -26,6 +26,7 @@ class DeduplicatorBot(Bot):
                 event.clear("observation_time")
 		if event.value("type")=="vulnerable service" or event.value("type")=="compromised":
 		   event.clear("source_time")
+		   event.clear("source_reverse_dns")
                 message_hash = hash(event)                            
 
             # Generic message deduplication

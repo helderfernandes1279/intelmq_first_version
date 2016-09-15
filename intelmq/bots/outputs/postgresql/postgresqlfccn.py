@@ -43,9 +43,10 @@ class PostgreSQLBot_fccn(Bot):
 	    else:	
                query   = "INSERT INTO events (" + keys + ") VALUES (" + fvalues[:-2] + ")"
             
-            self.cur.execute(query, values)
+           
+	    self.cur.execute(query, values)
             self.con.commit()
-	   
+	    
 
         self.acknowledge_message()
 

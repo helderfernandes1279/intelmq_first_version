@@ -23,9 +23,9 @@ class ShadowServerDroneParserBot(Bot):
                 "hostname": "source_reverse_dns",
                 "type": "__IGNORE__",
                 "infection": "malware",
-                "url": "__TBD__",
-                "agent": "__TBD__",
-                "cc": "destination_ip",
+                "url": "destination_url",
+                "agent": "user_agent",
+                "cc_ip": "destination_ip",
                 "cc_port": "destination_port",
                 "cc_asn": "destination_asn",
                 "cc_geo": "destination_cc",
@@ -40,18 +40,24 @@ class ShadowServerDroneParserBot(Bot):
 		"naics": "__IGNORE__",
 		"sic": "__IGNORE__",
 		"cc_naics": "__IGNORE__",
-		"cc_sic": "__IGNORE__"
-		
-				
+		"cc_sic": "__IGNORE__",
+		"sector": "__IGNORE__",
+		"cc_sector":"__IGNORE__",
+		"ssl_cipher": "__IGNORE__",
+		"family": "__IGNORE__",
+		"tag": "__IGNORE__",
+		"public_source": "__IGNORE__"			
             }
-            
+           
+
             rows = csv.DictReader(StringIO.StringIO(report))
             
             for row in rows:
 		event = Event()
-
+		fullurl = ""
+		port = None
                 for key, value in row.items():
-
+		
                     key = columns[key]
 
                     if not value:
@@ -64,16 +70,28 @@ class ShadowServerDroneParserBot(Bot):
                     
                     if key is "malware":
                         value = value.strip().lower()
-                        
+                     
+		    if key is "destination_port":
+		        port=value
+   
                     # set timezone explicitly to UTC as it is absent in the input
                     if key == "source_time":
                         value += " UTC"
                     
                     event.add(key, value)
-            
-                event.add('feed', 'shadowserver-drone')
-                event.add('type', 'botnet drone')
+
+            	if port=="80":
+		   fullurl="http://"
+ 		if port=="443":
+		   fullurl="https://"
+		
+		if event.value('destination_reverse_dns') != None and event.value('destination_url')!= None:
+                   fullurl=fullurl+event.value('destination_reverse_dns')+event.value('destination_url')
+		   event.clear('destination_url')
+		   event.add('destination_url',fullurl)
                 
+		event.add('feed', 'shadowserver-drone')
+                event.add('type', 'botnet drone')
                 event = utils.parse_source_time(event, "source_time")  
                 event = utils.generate_observation_time(event, "observation_time")
                 event = utils.generate_reported_fields(event)

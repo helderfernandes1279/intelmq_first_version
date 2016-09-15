@@ -16,6 +16,7 @@ class ipechelonParserBot(Bot):
 	reports=ast.literal_eval(reports)
         
         if reports:
+	    badparsing=0
             for report in reports:
 		pre_parsed_lines=[]
 		
@@ -41,28 +42,31 @@ class ipechelonParserBot(Bot):
 		#transformar o report em dicionario depois de garantir que existem linhas de report
 		if startpos!=endpos:
 		 for p in pre_parsed_lines[startpos:endpos]:
-	   	     line=p.split(": ")	
-		     parsed_line_report[line[0]]=line[1]
-				  
+	   	     line=p.split(": ")
+		     if len(line)>1:
+		        parsed_line_report[line[0]]=line[1]
+		     else:
+			self.logger.info("Bad Parsing")
+			badparsing=1
+		  
 		
-		 
-                 event = Event()
-		 event.add('rtir_id',report['id'])
-		 event.add('description',report['subject'])
-                 event.add('source_ip',parsed_line_report['Infringer\'s IP Address'])
-		 event.add('source_port',parsed_line_report['Infringer\'s Port'])
-		 event.add('application_protocol',parsed_line_report['Protocol'].lower())
-		 event.add('additional_information','Content name:'+parsed_line_report['Infringed Work'] + ' | File name:'+parsed_line_report['Infringing FileName'] + ' | File size:'+parsed_line_report['Infringing FileSize'])
-		 date_value=datetime.strptime(parsed_line_report['Initial Infringement Timestamp'][:-1],'%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d %H:%M:%S') + " UTC"
-		 event.add('source_time',date_value)
-                 event.add('feed', 'RT-ipechelon')
-                 event.add('feed_code', 'ipechelon')
-	 	 event.add('type', 'copyright')
-                 event = utils.parse_source_time(event, "source_time")
-                 event = utils.generate_observation_time(event, "observation_time")
-                 event = utils.generate_reported_fields(event)
-
-                 self.send_message(event)
+		 if badparsing==0:
+                  event = Event()
+		  event.add('rtir_id',report['id'])
+		  event.add('description',report['subject'])
+                  event.add('source_ip',parsed_line_report['Infringer\'s IP Address'])
+		  event.add('source_port',parsed_line_report['Infringer\'s Port'])
+		  event.add('application_protocol',parsed_line_report['Protocol'].lower())
+		  event.add('additional_information','Content name:'+parsed_line_report['Infringed Work'] + ' | File name:'+parsed_line_report['Infringing FileName'] + ' | File size:'+parsed_line_report['Infringing FileSize'])
+		  date_value=datetime.strptime(parsed_line_report['Initial Infringement Timestamp'][:-1],'%Y-%m-%dT%H:%M:%S').strftime('%Y-%m-%d %H:%M:%S') + " UTC"
+		  event.add('source_time',date_value)
+                  event.add('feed', 'RT-ipechelon')
+                  event.add('feed_code', 'ipechelon')
+	 	  event.add('type', 'copyright')
+                  event = utils.parse_source_time(event, "source_time")
+                  event = utils.generate_observation_time(event, "observation_time")
+                  event = utils.generate_reported_fields(event)
+                  self.send_message(event)
 
         self.acknowledge_message()
 

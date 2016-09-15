@@ -41,17 +41,17 @@ class torexitnodeBot(Bot):
                   
                if resultsrc:
 		  if not message.contains('comment'):
-                     message.add("comment","Src ip TOR exit node")
+                     message.add("comment","[TOR Source IP]")
 		     self.logger.info("Info added")
                   else:
-                     message.add("comment",message.value('comment')+', Src ip TOR exit node')
+                     message.add("comment",message.value('comment')+'[TOR Source IP]')
                      self.logger.info("Info added")
                if resultdst:
 		  if not message.contains('comment'):
-                     message.add("comment","Dst ip TOR exit node")
+                     message.add("comment","[TOR Destination IP]")
                      self.logger.info("Info added")
                   else:
-                     message.add("comment",message.value('comment')+', Dst ip TOR exit node')
+                     message.add("comment",message.value('comment')+'[TOR Destination IP]')
                      self.logger.info("Info added")
 		     
 		                         

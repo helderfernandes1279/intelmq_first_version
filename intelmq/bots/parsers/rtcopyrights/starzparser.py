@@ -14,7 +14,6 @@ class starzParserBot(Bot):
 	
 	
 	reports=ast.literal_eval(reports)
-        self.logger.info(reports)
         if reports:
             for report in reports:
 		pre_parsed_lines=[]
@@ -22,7 +21,7 @@ class starzParserBot(Bot):
 		
 		for p in report['message'].split('\n'):
 	            pre_parsed_lines.append(p.strip())
-		
+		    
                 parsed_line_report=dict()
 		count=0 
 		startpos=0
@@ -30,22 +29,24 @@ class starzParserBot(Bot):
 		
 		#Verificar qual e o inicio e o fim do array que contem a informacao do report 
        		while count<len(pre_parsed_lines):
+		     	
 	    	      if pre_parsed_lines[count].startswith('Evidentiary Information'):
 	       		 startpos=count+1
-            	      if pre_parsed_lines[count].startswith('Infringer\'s User Name') and startpos!=0 and endpos==0:	
+            	      if "User Name" in pre_parsed_lines[count] and startpos!=0 and endpos==0:	
 	       		 endpos=count-1
 	    	      count+=1
 
 				
-
+                
 		#transformar o report em dicionario depois de garantir que existem linhas de report
 		if startpos!=endpos:
+	         
 		 for p in pre_parsed_lines[startpos:endpos]:
 	   	     line=p.split(": ")	
 		     parsed_line_report[line[0]]=line[1]
 				  
 		
-		 
+		
                  event = Event()
 		 event.add('rtir_id',report['id'])
 		 event.add('description',report['subject'])

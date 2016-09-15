@@ -45,10 +45,13 @@ class ShadowServerHttpSinkholeParserBot(Bot):
                 
                 for key, value in row.items():
 
-                    key = columns[key]
-
-                    if not value:
+                    
+		    if not value or key not in columns:
                         continue
+
+ 	    	    key = columns[key]
+
+                   
 
                     value = value.strip()
                     
