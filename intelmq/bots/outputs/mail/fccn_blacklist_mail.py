@@ -7,12 +7,14 @@ from email.MIMEBase import MIMEBase
 from email.header import Header
 from email import Encoders
 
-class IntelMQMailerBot(Bot):
+class FCCN_blacklist_IntelMQMailerBot(Bot):
 
     def process(self):
         event = self.receive_message()
         event_msg="\nEvent Details:\n\n"
 	if event:
+	 
+	 if not event.value('entity')=='external':
             for key in event.keys():
 		event_msg+=key+' : '+event.value(key)+'\n'
             self.sendmail(self.parameters.send_from,[self.parameters.send_to],self.parameters.subject,event_msg,self.parameters.smtpserver)    
@@ -36,5 +38,5 @@ class IntelMQMailerBot(Bot):
     	smtp.close()
        
 if __name__ == "__main__":
-    bot = IntelMQMailerBot(sys.argv[1])
+    bot = FCCN_blacklist_IntelMQMailerBot(sys.argv[1])
     bot.start()

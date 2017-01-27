@@ -69,6 +69,7 @@ class nfsenpluginParserBot(Bot):
                      event = utils.generate_reported_fields(event)
                      self.send_message(event)
 		     self.logger.info("Message sent")
+                     
             self.acknowledge_message()
 
 

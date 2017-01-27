@@ -100,6 +100,14 @@
                 "rate_limit": "3600"
             }
         },
+	"Malware Domains Blacklist": {
+            "module": "intelmq.bots.collectors.url.collector",
+            "description": "Malware Domains Blacklist Collector is the bot responsible to get the report from source of information.",
+            "parameters": {
+                "url": "http://mirror2.malwaredomains.com/files/domains.txt",
+                "rate_limit": "86400"
+            }
+        },
         "BruteForceBlocker": {
             "module": "intelmq.bots.collectors.url.collector",
             "description": "BruteForceBlocker Collector is the bot responsible to get the report from source of information.",
@@ -187,7 +195,37 @@
                 "attach_unzip": true
             }
         },
-	 "ShadowServer Compromised Websites Report": {
+	"ShadowServer Command and Control Report": {
+            "module": "intelmq.bots.collectors.mail.mail-attach",
+            "description": "ShadowServer Command and Control Collector is the bot responsible to get the report from source of information.",
+            "parameters": {
+                "rate_limit": "3600",
+                "mail_host": "<host>",
+                "mail_user": "<user>",
+                "mail_password": "<password>",
+                "mail_ssl": true,
+                "folder": "Inbox.shadowserver",
+                "subject_regex": "Command and Control Report",
+                "attach_regex": "asn.csv.zip",
+                "attach_unzip": true
+            }
+        },
+	"ShadowServer Blacklisted IP Report": {
+            "module": "intelmq.bots.collectors.mail.mail-attach",
+            "description": "ShadowServer Blacklisted IP Collector is the bot responsible to get the report from source of information.",
+            "parameters": {
+                "rate_limit": "3600",
+                "mail_host": "<host>",
+                "mail_user": "<user>",
+                "mail_password": "<password>",
+                "mail_ssl": true,
+                "folder": "Inbox.shadowserver",
+                "subject_regex": "Blacklisted IP Addresses Report",
+                "attach_regex": "asn.csv.zip",
+                "attach_unzip": true
+            }
+        },
+        "ShadowServer Compromised Websites Report": {
             "module": "intelmq.bots.collectors.mail.mail-attach",
             "description": "ShadowServer Compromised Websites Collector is the bot responsible to get the report from source of information.",
             "parameters": {
@@ -399,7 +437,7 @@
         },
 	"ShadowServer Open MongoDB Report": {
             "module": "intelmq.bots.collectors.mail.mail-attach",
-            "description": "ShadowServer PortMapper Collector is the bot responsible to get the report from source of information.",
+            "description": "ShadowServer MongoDB Collector is the bot responsible to get the report from source of information.",
             "parameters": {
                 "rate_limit": "3600",
                 "mail_host": "<host>",
@@ -410,6 +448,51 @@
 		"subject_regex": "Open MongoDB Service Report",
                 "attach_regex": "asn.csv.zip",
                 "attach_unzip": true
+            }
+        },
+	"ShadowServer Open LDAP Report": {
+            "module": "intelmq.bots.collectors.mail.mail-attach",
+            "description": "ShadowServer Open Ldap Collector is the bot responsible to get the report from source of information.",
+            "parameters": {
+                "rate_limit": "3600",
+                "mail_host": "<host>",
+                "mail_user": "<user>",
+                "mail_password": "<password>",
+                "mail_ssl": true,
+                "folder": "Inbox.shadowserver",
+		"subject_regex": "Open LDAP Services Report",
+                "attach_regex": "asn.csv.zip",
+                "attach_unzip": true
+            }
+        },
+	"ShadowServer ISAKMP Report": {
+            "module": "intelmq.bots.collectors.mail.mail-attach",
+            "description": "ShadowServer ISAKMP Collector is the bot responsible to get the report from source of information.",
+            "parameters": {
+                "rate_limit": "3600",
+                "mail_host": "<host>",
+                "mail_user": "<user>",
+                "mail_password": "<password>",
+                "mail_ssl": true,
+                "folder": "Inbox.shadowserver",
+		"subject_regex": "ISAKMP Vulnerability Scan Report",
+                "attach_regex": "asn.csv.zip",
+                "attach_unzip": true
+            }
+        },
+	"Splunk alerts": {
+            "module": "intelmq.bots.collectors.mail.splunk_mail-attach",
+            "description": "Splunk Alerts Collector is the bot responsible to get the report from source of information.",
+            "parameters": {
+                "rate_limit": "3600",
+                "mail_host": "<host>",
+                "mail_user": "<user>",
+                "mail_password": "<password>",
+                "mail_ssl": true,
+                "folder": "Inbox.splunk",
+		"subject_regex": "Splunk Alert",
+                "attach_regex": "Alertas_",
+                "attach_unzip": false
             }
         },
 	"IntelMQ Listner": {
@@ -601,6 +684,13 @@
                 "rate_limit": "0"
             }
         },
+	"RT Broad Green Pictures COPYRIGHT": {
+            "module": "intelmq.bots.parsers.rtcopyrights.broadgreenparser",
+            "description": "RT Broad Green Pictures COPYRIGHT Parser is the bot responsible to parse the copyrights reports from request tracker.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+        },
 
         "RT Entura COPYRIGHT": {
             "module": "intelmq.bots.parsers.rtcopyrights.enturaparser",
@@ -707,6 +797,20 @@
                 "rate_limit": "0"
             }
         },
+	"ShadowServer Command and Control Report": {
+            "module": "intelmq.bots.parsers.shadowserver.command-and-control-parser",
+            "description": "ShadowServer Compromised Websites Parser is the bot responsible to parse the report and sanitize the information.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+        },
+	"ShadowServer Blacklisted IP Addresses Report": {
+            "module": "intelmq.bots.parsers.shadowserver.blacklisted_ips",
+            "description": "ShadowServer blacklisted ips Parser is the bot responsible to parse the report and sanitize the information.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+        },
 	"ShadowServer SSL Poodle": {
             "module": "intelmq.bots.parsers.shadowserver.ssl-poodle",
             "description": "ShadowServer SSL Poodle Parser is the bot responsible to parse the report and sanitize the information.",
@@ -787,6 +891,34 @@
 	"ShadowServer Open MongoDB": {
             "module": "intelmq.bots.parsers.shadowserver.mongodb-parser",
             "description": "ShadowServer MongoDB Parser is the bot responsible to parse the report and sanitize the information.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+	},
+	"ShadowServer Open LDAP": {
+            "module": "intelmq.bots.parsers.shadowserver.openldap-parser",
+            "description": "ShadowServer Open Ldap Parser is the bot responsible to parse the report and sanitize the information.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+	},
+	"ShadowServer ISAKMP": {
+            "module": "intelmq.bots.parsers.shadowserver.isakmp-parser",
+            "description": "ShadowServer ISAKMP Parser is the bot responsible to parse the report and sanitize the information.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+	},
+	"Splunk Alerts Parser": {
+            "module": "intelmq.bots.parsers.splunk_alerts.splunk_alerts-parser",
+            "description": "Splunk Alerts Parser is the bot responsible to parse the alerts from splunk.",
+            "parameters": {
+                "rate_limit": "0"
+            }
+	},
+	"Malware Domains Blacklist Parser": {
+            "module": "intelmq.bots.parsers.malwaredomains.malwaredomains-parser",
+            "description": "Malware Domains Blacklist Parser is the bot responsible to parse the domains from malwaredomains.",
             "parameters": {
                 "rate_limit": "0"
             }
@@ -881,9 +1013,26 @@
                 "database": "/opt/intelmq/var/lib/bots/geoip/GeoLite2-City.mmdb"
             }
         },
+	"FCCN blacklist GeoIP": {
+            "module": "intelmq.bots.experts.geoip.fccnblacklist_geoip",
+            "description": "GeoIP (MaxMind) is the bot responsible to add geolocation information to the FCCN blacklist (Country, City, Longitude, Latitude, etc..)",
+            "parameters": {
+                "rate_limit": "0",
+                "database": "/opt/intelmq/var/lib/bots/geoip/GeoLite2-City.mmdb"
+            }
+        },
         "ASN Lookup": {
             "module": "intelmq.bots.experts.asnlookup.asnlookup",
             "description": "ASN Lookup is the bot responsible to add ASN and BGP information from Route Views Project to the events.",
+            "parameters": {
+                "rate_limit": "0",
+                "database": "/opt/intelmq/var/lib/bots/asnlookup/ipasn.dat"
+             }
+        },
+	
+	"FCCN blacklist ASN Lookup": {
+            "module": "intelmq.bots.experts.asnlookup.fccnblacklist_asnlookup",
+            "description": "ASN Lookup is the bot responsible to add ASN and BGP information from Route Views Project to the FCCN blacklist.",
             "parameters": {
                 "rate_limit": "0",
                 "database": "/opt/intelmq/var/lib/bots/asnlookup/ipasn.dat"
@@ -910,6 +1059,22 @@
 	"Constituency Identifier": {
             "module": "intelmq.bots.experts.constituency.constituency",
             "description": "Sanitizer is the bot responsible to sanitize all events.",
+            "parameters": {
+                "rate_limit": "0",
+		"database" : "/opt/intelmq/var/lib/bots/constituency/contacts.json"
+            }
+        },
+	"FCCN Blacklist Constituency Identifier": {
+            "module": "intelmq.bots.experts.constituency.fccn_blacklist_constituency",
+            "description": "Identifies Constituency IP address",
+            "parameters": {
+                "rate_limit": "0",
+		"database" : "/opt/intelmq/var/lib/bots/constituency/contacts.json"
+            }
+        },
+	"FCCN Domain Blacklist Constituency Identifier": {
+            "module": "intelmq.bots.experts.constituency.fccn_domain_blacklist_constituency",
+            "description": "Identifies Constituency IP address",
             "parameters": {
                 "rate_limit": "0",
 		"database" : "/opt/intelmq/var/lib/bots/constituency/contacts.json"
@@ -1004,6 +1169,17 @@
 				"smtpserver" : "<smtp server>"
             }
         },
+	"FCCN Blacklist Mail Output": {
+            "module": "intelmq.bots.outputs.mail.fccn_blacklist_mail",
+            "description": "Send emails if constituency IP address is found.",
+            "parameters": {
+                "rate_limit": "0",
+                "send_from": "<from address>",
+                "send_to": "<to address>",
+				"subject": "<email subject>",
+				"smtpserver" : "<smtp server>"
+            }
+        },
         "MongoDB": {
             "module": "intelmq.bots.outputs.mongodb.mongodb",
             "description": "MongoDB is the bot responsible to send events to a MongoDB database.",
@@ -1030,6 +1206,30 @@
 	"PostgreSQLBotnetServerIP": {
             "module": "intelmq.bots.outputs.postgresql.postgresqlbotnetservers",
             "description": "PostgreSQLBotnetServerIP is the bot responsible to send C&C IP blocklist to a PostgreSQL Database.",
+            "parameters": {
+                "rate_limit": "0",
+                "host": "<ip>",
+                "port": "<port>",
+                "database": "intelmq-events",
+                "user": "intelmq",
+                "password": "<password>"
+            }
+        },
+	"PostgreSQLFCCN Blacklist": {
+            "module": "intelmq.bots.outputs.postgresql.postgresql_blacklist",
+            "description": "PostgreSQLFCCN_Blacklist is the bot responsible to send blacklisted IP's to PostgreSQL Database.",
+            "parameters": {
+                "rate_limit": "0",
+                "host": "<ip>",
+                "port": "<port>",
+                "database": "intelmq-events",
+                "user": "intelmq",
+                "password": "<password>"
+            }
+        },
+	"PostgreSQLFCCN domain Blacklist": {
+            "module": "intelmq.bots.outputs.postgresql.postgresql_domain_blacklist",
+            "description": "PostgreSQLFCCN_domain_Blacklist is the bot responsible to send blacklisted domains to PostgreSQL Database.",
             "parameters": {
                 "rate_limit": "0",
                 "host": "<ip>",

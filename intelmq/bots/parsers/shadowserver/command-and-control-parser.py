@@ -13,15 +13,17 @@ class ShadowServerCommandandControlParserBot(Bot):
             report = report.strip()
 
             columns = {
-                "timestamp": "source_time",
                 "ip": "source_ip",
+                "port":"source_port",
+		"channel": "additional_information",
                 "asn": "source_asn",
+		"as_name": "__IGNORE__",
+		"as_desc": "__IGNORE__",
 		"geo": "source_cc",
-		"md5hash": "artifact_hash",
-		"url" : "reported_destination_url",
-                "user_agent" : "user_agent",
-                "host": "reported_destination_reverse_dns",
-                "method": "comment"
+		"region": "__IGNORE__",
+		"city": "__IGNORE__",
+                "domain": "source_domain_name",
+                "first_seen": "source_time"
             }
             
             rows = csv.DictReader(StringIO.StringIO(report))
@@ -41,17 +43,18 @@ class ShadowServerCommandandControlParserBot(Bot):
                     if key is "__IGNORE__" or key is "__TDB__":
                         continue
                     
-                    # set timezone explicitly to UTC as it is absent in the input
+                    if key is "additional_information":
+			value = "Channel: " + value
+		    # set timezone explicitly to UTC as it is absent in the input
                     if key == "source_time":
                         value += " UTC"
-		    if key== "comment":
-			value ="HTTP Method ->"+value
+		
                     
                     event.add(key, value)
             
-                event.add('feed', 'shadowserver-Sandbox-Url')
-                event.add('type', 'malware')
-		event.add('artifact_hash_type','MD5')
+                event.add('feed', 'shadowserver-command-and-control')
+                event.add('type', 'c&c')
+		event.add('description','C&C Server')
                 
 
                 event = utils.parse_source_time(event, "source_time")  

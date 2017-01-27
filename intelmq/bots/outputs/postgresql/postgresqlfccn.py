@@ -27,7 +27,10 @@ class PostgreSQLBot_fccn(Bot):
 	    src_entity=event.value('source_entity')
 	    dst_entity=event.value('destination_entity')
 	    
-	    if src_entity:
+	    
+	       
+	
+            if src_entity:
 	       if re.search("FCCN",src_entity): 
 		  constituency_element=True
 		   
@@ -37,8 +40,7 @@ class PostgreSQLBot_fccn(Bot):
 		  constituency_element=True
 		  
 
-
-	    if constituency_element:	
+            if constituency_element:	
 	       query   = "INSERT INTO events_constituency (" + keys + ") VALUES (" + fvalues[:-2] + ")"
 	    else:	
                query   = "INSERT INTO events (" + keys + ") VALUES (" + fvalues[:-2] + ")"

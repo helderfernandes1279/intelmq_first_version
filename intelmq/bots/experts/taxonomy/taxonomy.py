@@ -36,7 +36,7 @@ class TaxonomyExpertBot(Bot):
         if event:
             if not event.contains("taxonomy") and event.contains("type"):
                 type = event.value("type")
-                taxonomy = TAXONOMY[type]
+                taxonomy = (TAXONOMY[type])
                 event.add("taxonomy", taxonomy)
             
             self.send_message(event)

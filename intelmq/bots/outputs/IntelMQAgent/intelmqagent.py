@@ -38,12 +38,15 @@ class IntelMQAgentBot(Bot):
 
         
     def send_data(self, data):
-            try:
+            data_sent = False
+            while not data_sent:
+             try:
 		self.connect()
                 self.con.sendall(data)
 		self.logger.info("Data sent sucessfully")
 		self.con.close()
-            except socket.error, e:
+		data_sent = True
+             except socket.error, e:
                 self.logger.error(e.args[1] + ". Reconnecting..")
                 self.con.close()
                 self.connect()

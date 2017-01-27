@@ -4,18 +4,18 @@ from intelmq.lib.bot import Bot, sys
            
 class ExclusionsExpertBot(Bot):
     
-    def init(self):
-	filereader=open(self.parameters.exclusionsfile,"r")
-	self.exclusionsdata=json.loads(filereader.read())
-	filereader.close()
+   
+
 
 	
     def process(self):
         event = self.receive_message()
-
+        filereader=open(self.parameters.exclusionsfile,"r")
+	exclusionsdata=json.loads(filereader.read())
+	filereader.close()
         if event:
 	   event.add('Excluded','N')
-	   for rule in self.exclusionsdata: 
+	   for rule in exclusionsdata: 
 	     
 	      keys=rule.keys()
               rulematch=True
@@ -35,9 +35,11 @@ class ExclusionsExpertBot(Bot):
 	      if rulematch==True:
 		  event.clear('Excluded')
 		  event.add('Excluded','Y')
-		  event.add('Exclusion_description',rule['exclusion_description'])	 
-		  break;
-
+		  if 'exclusion_description' in rule.keys():
+	      	     event.add('Exclusion_description',rule['exclusion_description'])	 
+		     break;
+		  else:
+		     break;
 	   self.send_message(event) 			                      
            self.acknowledge_message()
 
